@@ -12,18 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set Default Scheme
-        run: |
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
-          echo Using default scheme: $default
 
       - name: Build NekoGui
         env:
-          SCHEME: ${{ 'default' }}
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
-        run: xcodebuild -scheme "$SCHEME" -configuration Pre -derivedDataPath "$RUNNER_TEMP/DerivedData" -archivePath "$RUNNER_TEMP/$SCHEME.xcarchive" -skipPackagePluginValidation DEVELOPMENT_TEAM=$APPLE_TEAM_ID archive | xcpretty
+        run: xcodebuild -scheme NekoGui -configuration Pre -derivedDataPath "$RUNNER_TEMP/DerivedData" -archivePath "$RUNNER_TEMP/NekoGui.xcarchive" -skipPackagePluginValidation DEVELOPMENT_TEAM=$APPLE_TEAM_ID archive | xcpretty
 
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
