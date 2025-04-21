@@ -21,4 +21,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .frame(minWidth: 700, minHeight: 400)
 }
