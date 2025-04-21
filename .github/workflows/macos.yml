@@ -1,0 +1,21 @@
+name: MacOS Build and Release
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build and Test default scheme
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set Default Scheme
+        run: |
+          scheme_list=$(xcodebuild -list -json | tr -d "\n")
+          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
+          echo $default | cat >default
+          echo Using default scheme: $default
+      
