@@ -12,12 +12,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      # https://docs.github.com/es/actions/use-cases-and-examples/deploying/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+      - name: Install Apple Certificate & Provisioning Profile
+        env:
+          DEV_CERT_B64: ${{ secrets.DEV_CERT_B64 }}
+          DEV_CERT_PWD: ${{ secrets.DEV_CERT_PWD }}
+          KEYCHAIN_TIMEOUT: 21600
+        run: |
+          DEV_CERT_P12="$RUNNER_TEMP/dev_cert.p12"
+          KEYCHAIN_DB="$RUNNER_TEMP/keychain.keychain-db"
+          KEYCHAIN_PWD=$(openssl rand -base64 24)
+          security create-keychain -p "$KEYCHAIN_PWD" "$KEYCHAIN_DB"
+          security set-keychain-settings -lut "$KEYCHAIN_TIMEOUT" "$KEYCHAIN_DB"
+          security unlock-keychain -p "$KEYCHAIN_PWD" "$KEYCHAIN_DB"
+          echo -n "$DEV_CERT_B64" | base64 --decode -o "$DEV_CERT_P12"
+          security import "$DEV_CERT_P12" -P "$DEV_CERT_PWD" -A -t cert -f pkcs12 -k "$KEYCHAIN_DB"
+          security list-keychain -d user -s "$KEYCHAIN_DB"
 
       - name: Build NekoGui
         env:
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
         run: xcodebuild -scheme NekoGui -configuration Pre -derivedDataPath "$RUNNER_TEMP/DerivedData" -archivePath "$RUNNER_TEMP/NekoGui.xcarchive" -skipPackagePluginValidation DEVELOPMENT_TEAM=$APPLE_TEAM_ID archive | xcpretty
 
+      # Optional: GitHub-hosted runners are isolated virtual machines that are automatically destroyed at the end of the job execution.
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
