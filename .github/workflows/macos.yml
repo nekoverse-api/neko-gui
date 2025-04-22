@@ -16,7 +16,7 @@ jobs:
       - name: Install create-dmg
         run: brew install create-dmg
       
-      # https://docs.github.com/es/actions/use-cases-and-examples/deploying/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+      #  https://docs.github.com/es/actions/use-cases-and-examples/deploying/installing-an-apple-certificate-on-macos-runners-for-xcode-development
       - name: Install Apple Certificate & Provisioning Profile
         env:
           DEV_CERT_B64: ${{ secrets.DEV_CERT_B64 }}
