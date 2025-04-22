@@ -43,6 +43,36 @@ jobs:
           echo "REV=$REV" >> $GITHUB_ENV
           codesign --sign "$CODESIGN_SIGN" -vvv --verbose --strict --options=runtime --prefix me.nekoverse.neko-gui --force --timestamp "$RUNNER_TEMP/NekoGui.xcarchive/Products/Applications/NekoGui.app"
 
+      - name: Create DMG & Notarize
+        env:
+          CODESIGN_SIGN: ${{ secrets.CODESIGN_SIGN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PWD: ${{ secrets.APPLE_ID_PWD }}
+          APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          xcrun notarytool store-credentials NekoGui --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_ID_PWD"
+          create-dmg \
+            --volname "NekoGui" \
+            --window-pos 200 120 \
+            --window-size 699 518 \
+            --icon-size 128 \
+            --icon "NekoGui.app" 170 210 \
+            --hide-extension "NekoGui.app" \
+            --app-drop-link 530 210 \
+            --codesign "$CODESIGN_SIGN" \
+            --notarize "NekoGui" \
+            "$RUNNER_TEMP/NekoGui.dmg" \
+            "$RUNNER_TEMP/NekoGui.xcarchive/Products/Applications/"
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: "NekoGui.dmg"
+          path: "$RUNNER_TEMP/NekoGui.dmg"
+          if-no-files-found: error
+          overwrite: true
+          compression-level: 9
+
       - name: Clean up keychain and provisioning profile (Optional in GitHub Runners)
         if: ${{ always() }}
         run: |
