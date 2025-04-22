@@ -35,8 +35,15 @@ jobs:
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
         run: xcodebuild -scheme NekoGui -configuration Pre -derivedDataPath "$RUNNER_TEMP/DerivedData" -archivePath "$RUNNER_TEMP/NekoGui.xcarchive" -skipPackagePluginValidation DEVELOPMENT_TEAM=$APPLE_TEAM_ID archive | xcpretty
 
-      # Optional: GitHub-hosted runners are isolated virtual machines that are automatically destroyed at the end of the job execution.
-      - name: Clean up keychain and provisioning profile
+      - name: Sign Neko Gui
+        env:
+          CODESIGN_SIGN: ${{ secrets.CODESIGN_SIGN }}
+        run: |
+          REV=$(git rev-parse --short HEAD)
+          echo "REV=$REV" >> $GITHUB_ENV
+          codesign --sign "$CODESIGN_SIGN" -vvv --verbose --strict --options=runtime --prefix me.nekoverse.neko-gui --force --timestamp "$RUNNER_TEMP/NekoGui.xcarchive/Products/Applications/NekoGui.app"
+
+      - name: Clean up keychain and provisioning profile (Optional in GitHub Runners)
         if: ${{ always() }}
         run: |
           security delete-keychain "$RUNNER_TEMP/keychain.keychain-db"
