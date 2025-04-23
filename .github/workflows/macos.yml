@@ -46,7 +46,9 @@ jobs:
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
         run: |
           create-dmg \
-            --volname "NekoGui" \
+            --volname "Neko" \
+            --volicon "$RUNNER_TEMP/Docs/neko.icns" \
+            --background "$RUNNER_TEMP/Docs/bg.png" \
             --window-pos 200 120 \
             --window-size 699 518 \
             --icon-size 128 \
