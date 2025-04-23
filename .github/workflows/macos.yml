@@ -46,12 +46,12 @@ jobs:
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
         run: |
           ls -la "$RUNNER_TEMP/../neko-gui/neko-gui"
-          cp "$RUNNER_TEMP/../neko-gui/neko-gui/Docs/neko.icns" "$RUNNER_TEMP/.neko.icns"
-          cp "$RUNNER_TEMP/../neko-gui/neko-gui/Docs/bg.png" "$RUNNER_TEMP/.background.png"
+          cp "$RUNNER_TEMP/../neko-gui/neko-gui/Docs/neko.icns" "$RUNNER_TEMP/neko.icns"
+          cp "$RUNNER_TEMP/../neko-gui/neko-gui/Docs/bg.png" "$RUNNER_TEMP/bg.png"
           create-dmg \
             --volname "Neko" \
-            --volicon "$RUNNER_TEMP/.neko.icns" \
-            --background "$RUNNER_TEMP/.background.png" \
+            --volicon "$RUNNER_TEMP/neko.icns" \
+            --background "$RUNNER_TEMP/bg.png" \
             --window-pos 200 120 \
             --window-size 699 518 \
             --icon-size 128 \
