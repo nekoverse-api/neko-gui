@@ -38,22 +38,13 @@ jobs:
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
         run: xcodebuild -scheme NekoGui -configuration Pre -derivedDataPath "$RUNNER_TEMP/DerivedData" -archivePath "$RUNNER_TEMP/NekoGui.xcarchive" -skipPackagePluginValidation DEVELOPMENT_TEAM=$APPLE_TEAM_ID archive | xcpretty
 
-      - name: Sign Neko Gui
-        env:
-          CODESIGN_SIGN: ${{ secrets.CODESIGN_SIGN }}
-        run: |
-          REV=$(git rev-parse --short HEAD)
-          echo "REV=$REV" >> $GITHUB_ENV
-          codesign --sign "$CODESIGN_SIGN" -vvv --verbose --strict --options=runtime --prefix me.nekoverse.neko-gui --force --timestamp "$RUNNER_TEMP/NekoGui.xcarchive/Products/Applications/NekoGui.app"
-
-      - name: Create DMG & Notarize
+      - name: Create DMG & Notarize (TODO - Fix Sign)
         env:
           CODESIGN_SIGN: ${{ secrets.CODESIGN_SIGN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PWD: ${{ secrets.APPLE_ID_PWD }}
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
         run: |
-          xcrun notarytool store-credentials NekoGui --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_ID_PWD"
           create-dmg \
             --volname "NekoGui" \
             --window-pos 200 120 \
@@ -62,8 +53,6 @@ jobs:
             --icon "NekoGui.app" 170 210 \
             --hide-extension "NekoGui.app" \
             --app-drop-link 530 210 \
-            --codesign "$CODESIGN_SIGN" \
-            --notarize "NekoGui" \
             "$RUNNER_TEMP/NekoGui.dmg" \
             "$RUNNER_TEMP/NekoGui.xcarchive/Products/Applications/"
 
