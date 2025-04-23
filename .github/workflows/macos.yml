@@ -68,6 +68,27 @@ jobs:
           if-no-files-found: error
           overwrite: true
           compression-level: 9
+      
+      - name: Get Version and Build number
+        run: |
+          APP_VERSION=$(xcrun agvtool mvers -terse1)
+          APP_BUILD=$(xcrun agvtool vers -terse)
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+          echo "APP_BUILD=$APP_BUILD" >> $GITHUB_ENV
+
+      - name: Release DMG
+        uses: 'marvinpinto/action-automatic-releases@latest'
+        env:
+          APP_VERSION: ${{ env.APP_VERSION }}
+          APP_BUILD: ${{ env.APP_BUILD }}
+        with:
+          title: "v${{ env.APP_VERSION }}"
+          files: |
+            "${{ RUNNER.TEMP }}/NekoGui.dmg"
+          automatic_release_tag: "v${{ env.APP_VERSION }}"
+          prerelease: true
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          draft: true
 
       - name: Clean up keychain and provisioning profile (Optional in GitHub Runners)
         if: ${{ always() }}
