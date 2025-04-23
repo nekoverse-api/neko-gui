@@ -45,7 +45,6 @@ jobs:
           APPLE_ID_PWD: ${{ secrets.APPLE_ID_PWD }}
           APPLE_TEAM_ID:  ${{ secrets.APPLE_TEAM_ID }}
         run: |
-          ls -la "$RUNNER_TEMP/../neko-gui/neko-gui"
           cp "$RUNNER_TEMP/../neko-gui/neko-gui/Docs/neko.icns" "$RUNNER_TEMP/neko.icns"
           cp "$RUNNER_TEMP/../neko-gui/neko-gui/Docs/bg.png" "$RUNNER_TEMP/bg.png"
           create-dmg \
