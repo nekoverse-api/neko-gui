@@ -77,6 +77,7 @@ struct NekoRequestListItemView: View {
             NekoRequestListItemView(request: request)
         }
     }
+    .listStyle(.sidebar)
     .frame(width: 300, height: 500)
     .navigationTitle("Neko Request List Item")
 }

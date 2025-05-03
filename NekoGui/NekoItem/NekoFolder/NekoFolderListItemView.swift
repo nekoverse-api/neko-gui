@@ -45,6 +45,7 @@ struct NekoFolderListItemView: View {
             Spacer()
         }
     }
+    .listStyle(.sidebar)
     .padding(20)
     .frame(maxWidth: .infinity, alignment: .leading)
     .navigationTitle("Neko Request List Item")

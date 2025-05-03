@@ -20,9 +20,6 @@ struct NekoCollectionView: View {
     
     var body: some View {
         NavigationSplitView {
-            Spacer()
-                .frame(width: 200, height: 0)
-            
             List(collection.items, children: \.items, selection: $opened) { item in
                 switch(item) {
                 case .folder(let folder):
@@ -31,7 +28,7 @@ struct NekoCollectionView: View {
                     NekoRequestListItemView(request: request)
                 }
             }
-            .listStyle(.sidebar)
+            .toolbar(removing: .sidebarToggle)
             .searchable(text: $query, placement: .toolbar, prompt: Text("Search or Action"))
         } content: {
             if let item = selected {
