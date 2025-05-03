@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct NekoGuiApp: App {
+    var collection = NekoCollection(name: "test", items: [
+        .folder(NekoFolder(name: "Users")),
+        .folder(NekoFolder(name: "Pets")),
+        .request(NekoRequest(name: "Create User")),
+        .request(NekoRequest(name: "Delete User"))
+    ])
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NekoCollectionView(collection: collection)
         }
     }
 }
