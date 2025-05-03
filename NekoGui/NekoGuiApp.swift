@@ -9,11 +9,20 @@ import SwiftUI
 
 @main
 struct NekoGuiApp: App {
-    var collection = NekoCollection(name: "test", items: [
-        .folder(NekoFolder(name: "Users")),
-        .folder(NekoFolder(name: "Pets")),
-        .request(NekoRequest(name: "Create User")),
-        .request(NekoRequest(name: "Delete User"))
+    let collection = NekoCollection(name: "test", items: [
+        .folder(NekoFolder(name: "Users", items: [
+            .request(NekoRequest(name: "Get All Users", http: NekoHttp(url: "", method: "GET"))),
+            .request(NekoRequest(name: "Create User", http: NekoHttp(url: "", method: "POST"))),
+            .request(NekoRequest(name: "Delete User", http: NekoHttp(url: "", method: "DELETE")))
+        ])),
+        .folder(NekoFolder(name: "Pets", items: [
+            .request(NekoRequest(name: "Get Pet", http: NekoHttp(url: "", method: "GET"))),
+            .request(NekoRequest(name: "Create Pet", http: NekoHttp(url: "", method: "POST"))),
+            .request(NekoRequest(name: "Delete Pet", http: NekoHttp(url: "", method: "DELETE")))
+        ])),
+        .request(NekoRequest(name: "Get All Items", http: NekoHttp(url: "", method: "GET"))),
+        .request(NekoRequest(name: "Create Item", http: NekoHttp(url: "", method: "POST"))),
+        .request(NekoRequest(name: "Delete Item", http: NekoHttp(url: "", method: "DELETE")))
     ])
     
     var body: some Scene {

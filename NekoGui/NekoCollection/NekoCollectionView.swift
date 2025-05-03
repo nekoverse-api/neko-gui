@@ -25,7 +25,7 @@ struct NekoCollectionView: View {
                 case .folder(let folder):
                     Text(folder.name)
                 case .request(let request):
-                    Text(request.name)
+                    NekoRequestListItemView(request: request)
                 }
             }
             .searchable(text: $query, placement: .toolbar, prompt: Text("Search or Action"))
@@ -50,10 +50,19 @@ struct NekoCollectionView: View {
 
 #Preview {
     let collection = NekoCollection(name: "test", items: [
-        .folder(NekoFolder(name: "Users")),
-        .folder(NekoFolder(name: "Pets")),
-        .request(NekoRequest(name: "Create User")),
-        .request(NekoRequest(name: "Delete User"))
+        .folder(NekoFolder(name: "Users", items: [
+            .request(NekoRequest(name: "Get All Users", http: NekoHttp(url: "", method: "GET"))),
+            .request(NekoRequest(name: "Create User", http: NekoHttp(url: "", method: "POST"))),
+            .request(NekoRequest(name: "Delete User", http: NekoHttp(url: "", method: "DELETE")))
+        ])),
+        .folder(NekoFolder(name: "Pets", items: [
+            .request(NekoRequest(name: "Get Pet", http: NekoHttp(url: "", method: "GET"))),
+            .request(NekoRequest(name: "Create Pet", http: NekoHttp(url: "", method: "POST"))),
+            .request(NekoRequest(name: "Delete Pet", http: NekoHttp(url: "", method: "DELETE")))
+        ])),
+        .request(NekoRequest(name: "Get All Items", http: NekoHttp(url: "", method: "GET"))),
+        .request(NekoRequest(name: "Create Item", http: NekoHttp(url: "", method: "POST"))),
+        .request(NekoRequest(name: "Delete Item", http: NekoHttp(url: "", method: "DELETE")))
     ])
     
     NekoCollectionView(collection: collection)
