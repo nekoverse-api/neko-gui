@@ -20,12 +20,12 @@ struct NekoCollectionView: View {
     
     var body: some View {
         NavigationSplitView {
-            List(collection.items, selection: $opened) { item in
+            List(collection.items, children: \.items, selection: $opened) { item in
                 switch(item) {
                 case .folder(let folder):
-                    Text("Folder: " + folder.name)
+                    Text(folder.name)
                 case .request(let request):
-                    Text("Request: " + request.name)
+                    Text(request.name)
                 }
             }
             .searchable(text: $query, placement: .toolbar, prompt: Text("Search or Action"))

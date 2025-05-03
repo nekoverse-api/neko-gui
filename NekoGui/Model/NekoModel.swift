@@ -27,10 +27,15 @@ struct NekoRequest: Identifiable, Hashable {
 }
 
 enum NekoItem: Identifiable, Hashable {
-    var id: Self {
-        self
+    var id: Self { self }
+    var items: [NekoItem]? {
+        switch self {
+        case .folder(let folder): folder.items
+        case .request: nil
+        }
     }
     
     case folder(NekoFolder)
     case request(NekoRequest)
 }
+
