@@ -7,6 +7,9 @@
 
 import Foundation
 
+let EchoNekoDefaultUrl = "https://echo.nekoverse.me/api/v1/test"
+let EchoNekoDefaultMethod = "GET"
+
 struct NekoCollection: Identifiable, Hashable {
     var id = UUID()
     var name: String?
@@ -17,13 +20,13 @@ struct NekoCollection: Identifiable, Hashable {
 struct NekoFolder: Identifiable, Hashable {
     var id = UUID()
     var name: String
-    
+
     var items: [NekoItem] = []
 }
 
 struct NekoHttp: Codable, Hashable, Identifiable{
     var id = UUID()
-    
+
     var url: String
     var method: String
     var body: String?
@@ -34,8 +37,8 @@ struct NekoHttp: Codable, Hashable, Identifiable{
 struct NekoRequest: Identifiable, Hashable {
     var id = UUID()
     var name: String
-    
-    var http: NekoHttp = NekoHttp(url: "https://echo.nekoverse.me/api/v1/test", method: "GET")
+
+    var http: NekoHttp = NekoHttp(url: EchoNekoDefaultUrl, method: EchoNekoDefaultMethod)
 }
 
 enum NekoItem: Identifiable, Hashable {

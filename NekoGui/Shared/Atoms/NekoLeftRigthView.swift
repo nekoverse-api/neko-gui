@@ -55,4 +55,5 @@ struct NekoLeftRigthView: View {
     }
     .padding(20)
     .frame(maxWidth: .infinity, alignment: .leading)
+    .navigationTitle("Neko Left Rigth")
 }
