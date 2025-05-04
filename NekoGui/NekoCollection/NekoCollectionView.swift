@@ -39,7 +39,11 @@ struct NekoCollectionView: View {
                     NekoRequestView(request: request)
                 }
             } else {
-                Text("") //VSCodeTabsView()
+                NekoTabsView {
+                    Spacer()
+                    Text("REQEUST & RESPONSE")
+                    Spacer()
+                }
             }
         } detail: {
             Spacer()
