@@ -41,7 +41,7 @@ struct NekoFolderListItemView: View {
         switch(item) {
         case .folder(let folder):
             NekoFolderListItemView(folder: folder)
-        case .request(let request):
+        case .request:
             Spacer()
         }
     }
