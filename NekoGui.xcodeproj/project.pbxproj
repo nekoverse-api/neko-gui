@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4EFC29A72DC878C9003749A9 /* CodeEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 4EFC29A62DC878C9003749A9 /* CodeEditor */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4E9B29DB2DB5E7800020642D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EFC29A72DC878C9003749A9 /* CodeEditor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = NekoGui;
 			packageProductDependencies = (
+				4EFC29A62DC878C9003749A9 /* CodeEditor */,
 			);
 			productName = NekoGui;
 			productReference = 4E9B29C92DB5E77F0020642D /* NekoGui.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 4E9B29C02DB5E77F0020642D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4EFC29A52DC878C9003749A9 /* XCRemoteSwiftPackageReference "CodeEditor" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4E9B29CA2DB5E77F0020642D /* Products */;
 			projectDirPath = "";
@@ -557,6 +566,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4EFC29A52DC878C9003749A9 /* XCRemoteSwiftPackageReference "CodeEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZeeZide/CodeEditor.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4EFC29A62DC878C9003749A9 /* CodeEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4EFC29A52DC878C9003749A9 /* XCRemoteSwiftPackageReference "CodeEditor" */;
+			productName = CodeEditor;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4E9B29C12DB5E77F0020642D /* Project object */;
 }
