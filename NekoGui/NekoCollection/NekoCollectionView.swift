@@ -19,6 +19,7 @@ struct NekoCollectionView: View {
     }
     
     var body: some View {
+        
         NavigationSplitView {
             List(collection.items, children: \.items, selection: $opened) { item in
                 switch(item) {
@@ -28,7 +29,6 @@ struct NekoCollectionView: View {
                     NekoRequestListItemView(request: request)
                 }
             }
-            .toolbar(removing: .sidebarToggle)
             .searchable(text: $query, placement: .toolbar, prompt: Text("Search or Action"))
         } content: {
             if let item = selected {
@@ -40,9 +40,7 @@ struct NekoCollectionView: View {
                 }
             } else {
                 NekoTabsView {
-                    Spacer()
-                    Text("REQEUST & RESPONSE")
-                    Spacer()
+                    NekoRequestView(request: NekoRequest(name: "test"))
                 }
             }
         } detail: {

@@ -39,6 +39,13 @@ struct NekoTabsView<NekoContent: View>: View {
                         .padding(.trailing, 10)
                         .padding(.vertical, 15)
                 }
+                
+                NekoTabView(isCloseable: true) {
+                    NekoLabelView(method: "DELETE", name: "Delete Users", useSpacer: false )
+                        .padding(.leading, 5)
+                        .padding(.trailing, 10)
+                        .padding(.vertical, 15)
+                }
                 Spacer()
             }
             

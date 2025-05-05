@@ -25,9 +25,25 @@ struct NekoGuiApp: App {
         .request(NekoRequest(name: "Delete Item", http: NekoHttp(url: "", method: "DELETE")))
     ])
     
+    @State var text: String = ""
+    
     var body: some Scene {
         WindowGroup {
             NekoCollectionView(collection: collection)
+//                .navigationTitle("GARY")
+//                .searchable(text: .constant("")).keyboardShortcut(KeyEquivalent.leftArrow, modifiers: [.command])
+//            
+//                .toolbar {
+//                    Toggle("Dark Mode", isOn: .constant(true))
+//                    Text("GARY")
+//                    
+//                    TextField("VALUE", text: $text)
+//                    
+//                    
+//                }
+//                .tabViewSidebarFooter {
+//                    Text("gary")
+//                }
         }
     }
 }
